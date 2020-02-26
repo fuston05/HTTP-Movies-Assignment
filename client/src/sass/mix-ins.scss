@@ -8,8 +8,10 @@
 }//end dFlex
 
 @mixin buttonStyles {
-  width: 100%;
-  padding: 8px;
+  color: #000;
+  width: 100px;
+  text-align: center;
+  padding: 3px;
   border-radius: 5px;
   border: 1px solid #aaa;
   font-size: $pSize;

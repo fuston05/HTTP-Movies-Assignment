@@ -1,7 +1,10 @@
 import React from 'react';
+import {Link, useParams, useHistory} from 'react-router-dom';
 
 const MovieCard = props => {
-  const { title, director, metascore, stars } = props.movie;
+  console.log('useParams: ', useParams());
+  console.log('useHistory: ', useHistory());
+  const { title, director, metascore, stars, id } = props.movie;
   return (
     <div className="movie-card">
       <h2>{title}</h2>
@@ -18,6 +21,7 @@ const MovieCard = props => {
           {star}
         </div>
       ))}
+      {useHistory().location.pathname.includes('movies') && <Link to= {`/update-movie/${id}`}>Edit Me</Link>}
     </div>
   );
 };
