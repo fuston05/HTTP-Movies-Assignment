@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 //styles
 import './UpdateForm.scss';
 
-const UpdateForm = ({movieList, setMovieList}) => {
+const UpdateForm = ({getMovieList, movieList, setMovieList}) => {
   const [movieToEdit, setMovieToEdit] = useState({});
   const {id} = useParams();
+  let history= useHistory();
 
   useEffect(() => {
-    const itemToEdit= movieList.find( movie => `${movie.id}` === id );
-    if(itemToEdit){
-      setMovieToEdit(itemToEdit);
-    }//end if
-  }, [id, movieList])
+      const itemToEdit= movieList.find( movie => `${movie.id}` === id );
+      if(itemToEdit){
+        setMovieToEdit(itemToEdit);
+      }//end if
+    
+  }, [])
 
   const handleChange = e => {
     let value= e.target.value;
@@ -39,15 +41,22 @@ const UpdateForm = ({movieList, setMovieList}) => {
         stars: cleanStars
       });
     }//end if is array
-    // console.log('new stars: ', cleanStars);
     console.log('cleanstars: ', cleanStars);
-  
     //axios.put
-    axios.put(`http://localhost:5000/api/movies/:${movieToEdit.id}`, movieToEdit)
-      .then(putRes => {console.log('putRes.data: ', putRes.data)})
+    axios.put(`http://localhost:5000/api/movies/${movieToEdit.id}`, movieToEdit)
+      .then(putRes => {
+        console.log('putRes.data: ', putRes.data);
+        setMovieToEdit({});
+      })
+      .then( () => {
+        
+        setTimeout( () => {
+          getMovieList();
+          history.push(`/movies/${id}`);
+        } , 3000)
+      
+      } )
       .catch(putErr => {console.log('putErr: ', putErr)})
-
-
     console.log('submitted!');
   }//end handleSubmit
 
@@ -55,6 +64,7 @@ const UpdateForm = ({movieList, setMovieList}) => {
     <div className='updateCont'>
       
       {console.log('movieToEdit from state: ', movieToEdit)}
+      {console.log('movieList from props: ', movieList)}
       <form onSubmit={handleSubmit}>
 
         <label htmlFor='title'>Title</label>

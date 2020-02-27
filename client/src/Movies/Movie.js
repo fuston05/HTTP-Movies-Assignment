@@ -22,6 +22,8 @@ function Movie({ addToSavedList }) {
     fetchMovie(match.params.id);
   }, [match.params.id]);
 
+  console.log('matchParams: ', match.params.id);
+
   if (!movie) {
     return <div>Loading movie information...</div>;
   }
@@ -29,7 +31,6 @@ function Movie({ addToSavedList }) {
   return (
     <div className='save-wrapper'>
       <MovieCard movie={movie} />
-
       <div className='save-button' onClick={saveMovie}>
         Save
       </div>

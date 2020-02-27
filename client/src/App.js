@@ -30,9 +30,11 @@ const App = () => {
   useEffect(() => {
     getMovieList();
   }, []);
+  
 
   return (
     <>
+    {console.log('state from App: ', movieList)}
       <SavedList list={savedList} />
 
       <Route exact path="/">
@@ -45,6 +47,7 @@ const App = () => {
 
       <Route path= '/update-movie/:id'>
         <UpdateFrom 
+          getMovieList= {getMovieList}
           setMovieList= {setMovieList} 
           movieList= {movieList}
           />

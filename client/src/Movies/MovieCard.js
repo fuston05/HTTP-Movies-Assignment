@@ -2,8 +2,6 @@ import React from 'react';
 import {Link, useParams, useHistory} from 'react-router-dom';
 
 const MovieCard = props => {
-  console.log('useParams: ', useParams());
-  console.log('useHistory: ', useHistory());
   const { title, director, metascore, stars, id } = props.movie;
   return (
     <div className="movie-card">
