@@ -1,0 +1,24 @@
+// mix-ins
+
+@mixin dFlex($dir, $just, $align) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $just;
+  align-items: $align;
+}//end dFlex
+
+@mixin buttonStyles {
+  color: #000;
+  width: 100px;
+  text-align: center;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  font-size: $pSize;
+  z-index: 2;
+
+  &:hover{
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}//end buttonStyles

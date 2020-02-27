@@ -1,9 +1,5 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background-color: #f2f2f2;
-}
+@import './sass//vars.scss';
+@import './sass/mix-ins.scss';
 
 .movie-card {
   background-color: #fff;
@@ -14,7 +10,15 @@ body {
   cursor: pointer;
   position: relative;
   margin: 1rem auto;
-}
+
+  a{
+    @include buttonStyles;
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+  }
+
+}//end movie-card
 
 .movie-director {
   padding: 4px 0;
@@ -63,12 +67,14 @@ body {
 }
 .save-button:hover {
   background-color: green;
+  cursor: pointer;
   color: white;
 }
 
 .home-button {
   padding: 5px 10px;
   background-color: lightskyblue;
+  color: #000;
 }
 
 .movie-warning {
