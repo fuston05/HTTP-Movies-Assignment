@@ -11,12 +11,34 @@
   position: relative;
   margin: 1rem auto;
 
-  a{
+  a#updateBtn{
     @include buttonStyles;
     position: absolute;
     right: 25px;
     bottom: 25px;
+    font-size: $aSize;
   }
+
+  #deleteBtn{
+    color: #000;
+    width: 100px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    font-size: $aSize;
+    z-index: 2;
+
+    position: absolute;
+    right: 160px;
+    bottom: 25px;
+
+      &:hover{
+        cursor: pointer;
+        opacity: 0.6;
+      }
+    
+  }//end deleteBtn
 
 }//end movie-card
 

@@ -15,12 +15,10 @@ const UpdateForm = ({getMovieList, movieList, setMovieList}) => {
       if(itemToEdit){
         setMovieToEdit(itemToEdit);
       }//end if
-    
   }, [])
 
   const handleChange = e => {
     let value= e.target.value;
-
     setMovieToEdit({
       ...movieToEdit,
       [e.target.name]: value
@@ -28,42 +26,25 @@ const UpdateForm = ({getMovieList, movieList, setMovieList}) => {
     console.log('handleChange: ');
   }//end handleChange
 
+  const sendPut= () => {
+    axios.put(`http://localhost:5000/api/movies/${movieToEdit.id}`, movieToEdit)
+    .then(putRes => {
+      console.log('putRes.data: ', putRes.data);
+      getMovieList();
+      history.push(`/movies/${id}`);
+    })
+    .catch(putErr => {console.log('putErr: ', putErr)})
+  }//end sendPut
+
   const handleSubmit = e => {
     e.preventDefault();
-    //cleanup stars array data
-    const cleanStars= [];
-    if(Array.isArray(movieToEdit.stars) === false){ 
-      movieToEdit.stars.split(',').map(star => {
-        return cleanStars.push(star);
-      })
-      setMovieToEdit({
-        ...movieToEdit,
-        stars: cleanStars
-      });
-    }//end if is array
-    console.log('cleanstars: ', cleanStars);
-    //axios.put
-    axios.put(`http://localhost:5000/api/movies/${movieToEdit.id}`, movieToEdit)
-      .then(putRes => {
-        console.log('putRes.data: ', putRes.data);
-        setMovieToEdit({});
-      })
-      .then( () => {
-        
-        setTimeout( () => {
-          getMovieList();
-          history.push(`/movies/${id}`);
-        } , 3000)
-      
-      } )
-      .catch(putErr => {console.log('putErr: ', putErr)})
+    sendPut();
+    {console.log('movieToEdit from state: ', movieToEdit)}
     console.log('submitted!');
   }//end handleSubmit
 
   return (
     <div className='updateCont'>
-      
-      {console.log('movieToEdit from state: ', movieToEdit)}
       {console.log('movieList from props: ', movieList)}
       <form onSubmit={handleSubmit}>
 
