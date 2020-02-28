@@ -1,8 +1,26 @@
 import React from 'react';
-import {Link, useParams, useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 const MovieCard = props => {
   const { title, director, metascore, stars, id } = props.movie;
+  const history= useHistory();
+
+  const deleteMovie= id => {
+    if(window.confirm('Are you sure you want to delete this movie?')){
+      axios
+        .delete(`http://localhost:5000/api/movies/${id}`)
+        .then(delRes => {
+          props.getMovieList()
+          history.push('/')
+          console.log('delRes: ', delRes);
+        })
+        .catch(delErr => {
+          console.log('delErr: ', delErr);
+        })
+    }//end if confirm
+  }//end deleteMovie
+
   return (
     <div className="movie-card">
       <h2>{title}</h2>
@@ -19,7 +37,11 @@ const MovieCard = props => {
           {star}
         </div>
       ))}
-      {useHistory().location.pathname.includes('movies') && <Link to= {`/update-movie/${id}`}>Edit Me</Link>}
+      {
+      useHistory().location.pathname.includes('movies') && <Link id= 'updateBtn' to= {`/update-movie/${id}`}>Edit Me</Link>}
+      {useHistory().location.pathname.includes('movies') &&
+      <button onClick= {() => deleteMovie(`${id}`)} id= 'deleteBtn'>Delete</button>
+      }
     </div>
   );
 };
